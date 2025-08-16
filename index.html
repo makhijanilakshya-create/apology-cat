@@ -1,119 +1,211 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>I just wanna gain your trust</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I’m Sorry — Kitty with Sign</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ffe4ef">
 <style>
   :root{
-    --bg1:#fff0f6; --bg2:#fff7ed; --ink:#1f2937; --stroke:#2b2b2b;
-    --fur:#fde68a; --blush:#fca5a5; --bow:#fb7185; --paper:#fff;
+    --bg1:#fff0f6;
+    --bg2:#fff7ed;
+    --ink:#1f2937;
+    --stroke:#2b2b2b;
+    --fur:#fde68a;   /* soft amber */
+    --blush:#fca5a5; /* pink cheeks */
+    --bow:#fb7185;   /* rose */
+    --paper:#ffffff;
+    --accent:#ffb3d9;
   }
   *{box-sizing:border-box}
-  html,body{height:100%;margin:0}
+  html,body{height:100%}
   body{
-    display:flex; align-items:center; justify-content:center;
-    background: radial-gradient(800px 500px at 15% 10%, var(--bg1), transparent),
-                radial-gradient(700px 420px at 85% 90%, var(--bg2), transparent),
-                #fff;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    padding:24px;
+    margin:0;
+    font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 600px at 15% 10%, var(--bg1), transparent),
+      radial-gradient(800px 500px at 85% 90%, var(--bg2), transparent),
+      #fff;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
   }
-
-  /* Card */
   .card{
-    width:min(96vw,580px);
-    max-width:98vw;
-    background:linear-gradient(180deg,#ffffffcc,#fffaf6cc);
-    border-radius:22px;
-    padding:18px;
-    box-shadow:0 18px 40px rgba(12,20,31,.12);
-    border:1px solid rgba(0,0,0,.06);
+    width:min(92vw,520px);
+    background:#fff;
+    border-radius:28px;
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
+    padding:20px 18px 26px;
     text-align:center;
+    border:1px solid rgba(0,0,0,.06);
   }
-  h1{margin:6px 0 4px;font-size:18px;color:var(--ink)}
-  p.lead{margin:0 0 12px;color:#52606d;font-size:14px}
-
-  /* Stage */
+  .tip{margin:6px 0 12px; color:#64748b; font-size:.95rem}
   .stage{
     position:relative;
     width:100%;
-    height:min(62vh,520px);
-    border-radius:16px;
-    background: linear-gradient(180deg,#fff,#fff7fb);
-    display:flex; align-items:center; justify-content:center;
-    overflow:visible;
-    padding:12px;
+    height:360px;
+    border-radius:24px;
+    background:
+      radial-gradient(600px 220px at 50% 110%, rgba(255,182,193,.20), transparent),
+      linear-gradient(180deg, #fff, #fff7fb);
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+    border:1px dashed rgba(0,0,0,.06);
+    touch-action:manipulation; /* improves iOS tapping */
   }
   .floor{
-    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
-    width:280px; height:36px; border-radius:50%;
-    background: radial-gradient(closest-side, rgba(0,0,0,.16), transparent);
+    position:absolute; bottom:26px; left:50%; transform:translateX(-50%);
+    width:260px; height:36px; border-radius:50%;
+    background: radial-gradient(closest-side, rgba(0,0,0,.18), transparent);
     filter: blur(2px);
-    z-index:1;
   }
-
-  /* SVG sizing */
-  svg#kittySVG{ width:min(78%,420px); height:auto; display:block; cursor:pointer; outline:none; }
-
-  /* Idle vs dance */
-  #catGroup.idle{ transform-origin: 110px 220px; animation: idle 2200ms ease-in-out infinite; }
-  #catGroup.dance{ transform-origin: 110px 220px; animation: dance 950ms cubic-bezier(.2,.9,.2,1) infinite; }
-
-  @keyframes idle {
+  /* ANIMATIONS */
+  .blink{ animation: blink 5s infinite steps(1,end) }
+  @keyframes blink{
+    0%,96%{ opacity:1 } 97%,100%{ opacity:0 }
+  }
+  .tail{ transform-origin: 160px 210px; animation: tail 1.6s infinite ease-in-out }
+  @keyframes tail{ 0%,100%{ transform:rotate(8deg) } 50%{ transform:rotate(-10deg) } }
+  .idle{ transform-origin: 110px 235px; animation: idle 2.2s infinite ease-in-out }
+  @keyframes idle{
     0%,100%{ transform: translateY(0) rotate(-1.2deg) }
-    50%{  transform: translateY(-5px) rotate(1.2deg)  }
+    50%{ transform: translateY(-6px) rotate(1.2deg) }
   }
-  @keyframes dance {
-    0%{ transform: translateY(0) rotate(-6deg) scale(1) }
-    25%{ transform: translateY(-12px) rotate(6deg) scale(1.02) }
-    50%{ transform: translateY(-2px) rotate(-6deg) scale(1.01) }
-    75%{ transform: translateY(-10px) rotate(6deg) scale(1.02) }
+  .dance{ transform-origin: 110px 235px; animation: dance .95s infinite cubic-bezier(.2,.9,.2,1) }
+  @keyframes dance{
+    0%  { transform: translateY(0) rotate(-6deg) scale(1) }
+    25% { transform: translateY(-12px) rotate(6deg)  scale(1.02) }
+    50% { transform: translateY(-2px) rotate(-6deg)  scale(1.01) }
+    75% { transform: translateY(-10px) rotate(6deg)  scale(1.02) }
     100%{ transform: translateY(0) rotate(-6deg) scale(1) }
   }
-
-  /* Blinking eyes */
-  .blink{ animation: blink 5s infinite steps(1,end) }
-  @keyframes blink{ 0%,96%{ opacity:1 } 97%,100%{ opacity:0 } }
-
-  /* Hearts */
   .heart{
-    position:fixed;
-    left:0; top:0;
-    font-size:22px;
-    pointer-events:none;
-    transform:translate3d(0,0,0);
-    will-change: transform, opacity;
-    opacity:1;
-    /* animation set dynamically */
+    position:absolute; font-size:24px; pointer-events:none;
+    animation: floatUp 1.9s ease-in forwards;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.18));
   }
-  @keyframes heartFloat {
-    to{
-      transform: translateX(var(--dx, 0px)) translateY(var(--dy, -220px)) rotate(var(--rot, 0deg));
-      opacity: 0;
-    }
+  @keyframes floatUp{
+    from{ transform: translateY(0) scale(.9) rotate(8deg); opacity:1 }
+    to  { transform: translateY(-210px) scale(1.4) rotate(-6deg); opacity:0 }
   }
-
-  /* small accessibility focus style */
-  svg#kittySVG:focus{ outline: 3px solid rgba(251,113,133,0.18); outline-offset:8px; border-radius:10px; }
-
-  /* caption */
-  .caption{ margin-top:12px; font-size:13px; color:#475569; }
-  .badge{ display:inline-block; background:#fff0f6; color:#9d174d; padding:6px 10px; border-radius:999px; font-weight:700; margin-left:6px; border:1px solid #ffd3ec; }
+  .cta{ font-size:.9rem; color:#475569; margin-top:8px }
+  .badge{ display:inline-block; background:#fff0f6; border:1px solid #ffd3ec; padding:6px 10px; border-radius:999px; font-weight:700; color:#9d174d; }
 </style>
 </head>
 <body>
-  <main class="card" role="main" aria-label="Interactive kitty apology">
-    <h1>Tap the kitty to make it dance</h1>
-    <p class="lead">Tap or press Enter / Space when focused. Hearts will float up while it dances.</p>
-
-    <section class="stage" id="stage" aria-hidden="false">
+  <main class="card" role="main" aria-label="Apology cat">
+    <div class="tip">Tap the cat to make it <span class="badge">dance</span> 💖</div>
+    <section class="stage" id="stage" aria-live="polite" aria-label="Interactive cat stage">
       <div class="floor" aria-hidden="true"></div>
 
-      <!-- SVG kitty (kawaii-style) - whole cat lives inside #catGroup -->
-      <svg id="kittySVG" viewBox="0 0 220 260" role="button" aria-pressed="false" tabindex="0" aria-label="Cute kitty holding a sign that says: I just wanna gain your trust at your space i wanna understand you. i do care about you.">
-        <g id="catGroup" class="idle">
-          <!-- tail -->
-          <g class="tail">
-            <path d="M170 200c24 10 24 30 8 36-
+      <!-- START SVG CAT (Hello-Kitty-inspired style, not exact) -->
+      <svg id="kitty" class="idle" width="280" height="300" viewBox="0 0 220 260" role="img" aria-label="Cute kitty holding a sign that says: I do care about you. Let me prove myself please.">
+        <!-- tail -->
+        <g class="tail">
+          <path d="M170 200c24 10 24 30 8 36-10 4-20-2-20-10s8-10 14-8c-6-8-4-14-2-18z"
+                fill="var(--fur)" stroke="var(--stroke)" stroke-width="4" stroke-linecap="round"/>
+        </g>
+
+        <!-- body -->
+        <g id="body">
+          <ellipse cx="110" cy="205" rx="50" ry="44" fill="var(--fur)" stroke="var(--stroke)" stroke-width="4"/>
+          <!-- belly -->
+          <ellipse cx="110" cy="212" rx="24" ry="20" fill="#fff7ed" stroke="var(--stroke)" stroke-width="3"/>
+          <!-- legs -->
+          <path d="M90 238 v12 M130 238 v12" stroke="var(--stroke)" stroke-width="6" stroke-linecap="round"/>
+        </g>
+
+        <!-- head -->
+        <g id="head">
+          <ellipse cx="110" cy="150" rx="56" ry="44" fill="var(--fur)" stroke="var(--stroke)" stroke-width="4"/>
+          <!-- ears -->
+          <path d="M74 128 L66 104 L90 116" fill="var(--fur)" stroke="var(--stroke)" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M146 128 L154 104 L130 116" fill="var(--fur)" stroke="var(--stroke)" stroke-width="4" stroke-linejoin="round"/>
+          <!-- eyes -->
+          <circle cx="92" cy="150" r="6" fill="var(--stroke)" class="blink"/>
+          <circle cx="128" cy="150" r="6" fill="var(--stroke)" class="blink"/>
+          <!-- nose -->
+          <ellipse cx="110" cy="162" rx="6" ry="4" fill="#f59e0b"/>
+          <!-- smile -->
+          <path d="M98 170 Q110 176 122 170" stroke="var(--stroke)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- blush -->
+          <ellipse cx="82" cy="162" rx="9" ry="6" fill="var(--blush)" opacity=".7"/>
+          <ellipse cx="138" cy="162" rx="9" ry="6" fill="var(--blush)" opacity=".7"/>
+          <!-- bow -->
+          <g transform="translate(138,136)">
+            <circle cx="-6" cy="0" r="9" fill="var(--bow)" stroke="var(--stroke)" stroke-width="3"/>
+            <circle cx="10" cy="0" r="12" fill="var(--bow)" stroke="var(--stroke)" stroke-width="3"/>
+            <circle cx="2" cy="0" r="6" fill="#fda4af" stroke="var(--stroke)" stroke-width="3"/>
+          </g>
+        </g>
+
+        <!-- SIGN the kitty is holding -->
+        <g id="sign">
+          <rect x="55" y="94" width="110" height="52" rx="8" fill="var(--paper)" stroke="var(--stroke)" stroke-width="3"/>
+          <text x="110" y="112" font-size="10.5" text-anchor="middle" fill="var(--ink)" style="font-weight:700">
+            <tspan x="110" dy="0">I do care about you.</tspan>
+            <tspan x="110" dy="14">Let me prove myself please</tspan>
+          </text>
+        </g>
+
+        <!-- arms gripping sign -->
+        <g id="arms">
+          <path d="M70 150 q-18 8 -16 26" stroke="var(--stroke)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M150 150 q18 8 16 26" stroke="var(--stroke)" stroke-width="6" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <!-- END SVG CAT -->
+    </section>
+
+    <div class="cta">Tap the kitty to toggle dance • Hearts will float up ✨</div>
+  </main>
+
+<script>
+  const stage = document.getElementById('stage');
+  const kitty = document.getElementById('kitty');
+
+  function heartBurst(x, y, count = 18){
+    const emojis = ["💖","💗","💓","💞","💘","💝"];
+    for(let i=0;i<count;i++){
+      const span = document.createElement('span');
+      span.className = 'heart';
+      span.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      span.style.left = (x + (Math.random()*60 - 30)) + 'px';
+      span.style.top  = (y + (Math.random()*30 - 15)) + 'px';
+      span.style.fontSize = (20 + Math.random()*14) + 'px';
+      stage.appendChild(span);
+      setTimeout(()=> span.remove(), 1900);
+    }
+  }
+
+  function centerOf(el){
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width/2, y: r.top + r.height/2 };
+  }
+
+  function toggleDance(){
+    if(kitty.classList.contains('dance')){
+      kitty.classList.remove('dance');
+      kitty.classList.add('idle');
+    }else{
+      kitty.classList.remove('idle');
+      kitty.classList.add('dance');
+    }
+    const c = centerOf(kitty);
+    heartBurst(c.x, c.y);
+    if ('vibrate' in navigator) navigator.vibrate(18);
+  }
+
+  // Make entire SVG tappable/clickable
+  kitty.style.cursor = 'pointer';
+  kitty.addEventListener('click', toggleDance);
+  kitty.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleDance(); }
+  });
+  kitty.setAttribute('tabindex','0'); // keyboard focusable
+</script>
+</body>
+</html>
